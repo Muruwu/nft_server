@@ -3,10 +3,36 @@ syntax = "proto3";
 package virtual_currency;
 option go_package = "virtual_currency";
 
-message PingRequest {
-    string name = 1;
+
+enum DiamondSource {
+    DiamondSource_Unknown = 0;
+    DiamondSource_Promotion = 1; // 推销拉新
+    DiamondSource_Consumption = 2; // 消费
 }
 
-message PingResponse {
-    string msg = 2;
+message AddDiamondRequest {
+    int64 uid = 1;
+    DiamondSource source = 2; // 获取渠道
+    int32 amount = 3; // 数量
+}
+
+message AddDiamondResponse {
+}
+
+// 消费钻石
+message ConsumeDiamondRequest {
+    int64 uid = 1;
+    int32 amount = 2; // 数量
+}
+
+message ConsumeDiamondResponse {
+}
+
+// 查询钻石
+message QueryUserDiamondRequest {
+    int64 uid = 1;
+}
+
+message QueryUserDiamondResponse {
+    int32 amount = 1;
 }
