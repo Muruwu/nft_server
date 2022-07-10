@@ -3,10 +3,49 @@ syntax = "proto3";
 package credits;
 option go_package = "credits";
 
-message PingRequest {
-    string name = 1;
+enum CreditsSource {
+    CreditsSource_Unknown = 0;
+    CreditsSource_CollectionChange = 1; // 藏品变更
+    CreditsSource_AdminModify = 2; // 系统修改
 }
 
-message PingResponse {
-    string msg = 2;
+enum CreditsChangeType {
+    CreditsChangeType_Unknown = 0;
+    CreditsChangeType_Positive = 1; // 正趋势
+    CreditsChangeType_Negative = 2; // 负趋势
+}
+
+message AddOrUpdateCreditsRequest {
+    int64 uid = 1; // 用户uid
+    CreditsSource source = 2; // 积分来源
+    CreditsChangeType change_type = 3; // 变更类型
+    int32 amount = 4; // 变更大小
+    string record = 5; // 变更来源记录， 如藏品id
+}
+
+message AddOrUpdateCreditsResponse {
+
+}
+
+message GetUserCreditsRequest {
+    int64 uid = 1; // 用户uid
+}
+
+message GetUserCreditsResponse {
+    int32 credits_amount = 1; // 积分数量
+}
+
+message RankItem {
+    int64 uid = 1; // 用户uid
+    string nick_name = 2; // 用户昵称
+    string avatar = 3; // 用户头像
+    int32 rank_index = 4; // 排行名次
+    int32 value = 5; // 排行分值
+}
+
+message GetCreditsRankRequest {
+}
+
+message GetCreditsRankResponse {
+    repeated RankItem items = 1;
 }
