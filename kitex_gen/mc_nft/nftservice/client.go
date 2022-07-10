@@ -6,12 +6,28 @@ import (
 	"context"
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/client/callopt"
+	"github.com/mc_nft/kitex_gen/credits"
 	"github.com/mc_nft/kitex_gen/ping"
+	"github.com/mc_nft/kitex_gen/props"
+	"github.com/mc_nft/kitex_gen/user"
+	"github.com/mc_nft/kitex_gen/virtual_currency"
 )
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
 	Ping(ctx context.Context, Req *ping.PingRequest, callOptions ...callopt.Option) (r *ping.PingResponse, err error)
+	UserLogin(ctx context.Context, Req *user.UserLoginRequest, callOptions ...callopt.Option) (r *user.UserLoginResponse, err error)
+	SmsSend(ctx context.Context, Req *user.SmsSendRequest, callOptions ...callopt.Option) (r *user.SmsSendResponse, err error)
+	Authenticate(ctx context.Context, Req *user.AuthenticateRequest, callOptions ...callopt.Option) (r *user.AuthenticateResponse, err error)
+	UserDetail(ctx context.Context, Req *user.UserDetailRequest, callOptions ...callopt.Option) (r *user.UserDetailResponse, err error)
+	AddProps(ctx context.Context, Req *props.AddPropsRequest, callOptions ...callopt.Option) (r *props.AddPropsResponse, err error)
+	UpdateProps(ctx context.Context, Req *props.UpdatePropsRequest, callOptions ...callopt.Option) (r *props.UpdatePropsResponse, err error)
+	AddDiamond(ctx context.Context, Req *virtual_currency.AddDiamondRequest, callOptions ...callopt.Option) (r *virtual_currency.AddDiamondResponse, err error)
+	ConsumeDiamond(ctx context.Context, Req *virtual_currency.ConsumeDiamondRequest, callOptions ...callopt.Option) (r *virtual_currency.ConsumeDiamondResponse, err error)
+	QueryUserDiamond(ctx context.Context, Req *virtual_currency.QueryUserDiamondRequest, callOptions ...callopt.Option) (r *virtual_currency.QueryUserDiamondResponse, err error)
+	AddOrUpdateCredits(ctx context.Context, Req *credits.AddOrUpdateCreditsRequest, callOptions ...callopt.Option) (r *credits.AddOrUpdateCreditsResponse, err error)
+	GetUserCredits(ctx context.Context, Req *credits.GetUserCreditsRequest, callOptions ...callopt.Option) (r *credits.GetUserCreditsResponse, err error)
+	GetCreditsRank(ctx context.Context, Req *credits.GetCreditsRankRequest, callOptions ...callopt.Option) (r *credits.GetCreditsRankResponse, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -46,4 +62,64 @@ type kNftServiceClient struct {
 func (p *kNftServiceClient) Ping(ctx context.Context, Req *ping.PingRequest, callOptions ...callopt.Option) (r *ping.PingResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.Ping(ctx, Req)
+}
+
+func (p *kNftServiceClient) UserLogin(ctx context.Context, Req *user.UserLoginRequest, callOptions ...callopt.Option) (r *user.UserLoginResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UserLogin(ctx, Req)
+}
+
+func (p *kNftServiceClient) SmsSend(ctx context.Context, Req *user.SmsSendRequest, callOptions ...callopt.Option) (r *user.SmsSendResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.SmsSend(ctx, Req)
+}
+
+func (p *kNftServiceClient) Authenticate(ctx context.Context, Req *user.AuthenticateRequest, callOptions ...callopt.Option) (r *user.AuthenticateResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.Authenticate(ctx, Req)
+}
+
+func (p *kNftServiceClient) UserDetail(ctx context.Context, Req *user.UserDetailRequest, callOptions ...callopt.Option) (r *user.UserDetailResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UserDetail(ctx, Req)
+}
+
+func (p *kNftServiceClient) AddProps(ctx context.Context, Req *props.AddPropsRequest, callOptions ...callopt.Option) (r *props.AddPropsResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.AddProps(ctx, Req)
+}
+
+func (p *kNftServiceClient) UpdateProps(ctx context.Context, Req *props.UpdatePropsRequest, callOptions ...callopt.Option) (r *props.UpdatePropsResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdateProps(ctx, Req)
+}
+
+func (p *kNftServiceClient) AddDiamond(ctx context.Context, Req *virtual_currency.AddDiamondRequest, callOptions ...callopt.Option) (r *virtual_currency.AddDiamondResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.AddDiamond(ctx, Req)
+}
+
+func (p *kNftServiceClient) ConsumeDiamond(ctx context.Context, Req *virtual_currency.ConsumeDiamondRequest, callOptions ...callopt.Option) (r *virtual_currency.ConsumeDiamondResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.ConsumeDiamond(ctx, Req)
+}
+
+func (p *kNftServiceClient) QueryUserDiamond(ctx context.Context, Req *virtual_currency.QueryUserDiamondRequest, callOptions ...callopt.Option) (r *virtual_currency.QueryUserDiamondResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.QueryUserDiamond(ctx, Req)
+}
+
+func (p *kNftServiceClient) AddOrUpdateCredits(ctx context.Context, Req *credits.AddOrUpdateCreditsRequest, callOptions ...callopt.Option) (r *credits.AddOrUpdateCreditsResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.AddOrUpdateCredits(ctx, Req)
+}
+
+func (p *kNftServiceClient) GetUserCredits(ctx context.Context, Req *credits.GetUserCreditsRequest, callOptions ...callopt.Option) (r *credits.GetUserCreditsResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetUserCredits(ctx, Req)
+}
+
+func (p *kNftServiceClient) GetCreditsRank(ctx context.Context, Req *credits.GetCreditsRankRequest, callOptions ...callopt.Option) (r *credits.GetCreditsRankResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetCreditsRank(ctx, Req)
 }

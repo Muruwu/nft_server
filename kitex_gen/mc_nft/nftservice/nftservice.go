@@ -8,8 +8,12 @@ import (
 	"github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
 	"github.com/cloudwego/kitex/pkg/streaming"
+	"github.com/mc_nft/kitex_gen/credits"
 	"github.com/mc_nft/kitex_gen/mc_nft"
 	"github.com/mc_nft/kitex_gen/ping"
+	"github.com/mc_nft/kitex_gen/props"
+	"github.com/mc_nft/kitex_gen/user"
+	"github.com/mc_nft/kitex_gen/virtual_currency"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -23,7 +27,19 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	serviceName := "NftService"
 	handlerType := (*mc_nft.NftService)(nil)
 	methods := map[string]kitex.MethodInfo{
-		"Ping": kitex.NewMethodInfo(pingHandler, newPingArgs, newPingResult, false),
+		"Ping":               kitex.NewMethodInfo(pingHandler, newPingArgs, newPingResult, false),
+		"UserLogin":          kitex.NewMethodInfo(userLoginHandler, newUserLoginArgs, newUserLoginResult, false),
+		"SmsSend":            kitex.NewMethodInfo(smsSendHandler, newSmsSendArgs, newSmsSendResult, false),
+		"Authenticate":       kitex.NewMethodInfo(authenticateHandler, newAuthenticateArgs, newAuthenticateResult, false),
+		"UserDetail":         kitex.NewMethodInfo(userDetailHandler, newUserDetailArgs, newUserDetailResult, false),
+		"AddProps":           kitex.NewMethodInfo(addPropsHandler, newAddPropsArgs, newAddPropsResult, false),
+		"UpdateProps":        kitex.NewMethodInfo(updatePropsHandler, newUpdatePropsArgs, newUpdatePropsResult, false),
+		"AddDiamond":         kitex.NewMethodInfo(addDiamondHandler, newAddDiamondArgs, newAddDiamondResult, false),
+		"ConsumeDiamond":     kitex.NewMethodInfo(consumeDiamondHandler, newConsumeDiamondArgs, newConsumeDiamondResult, false),
+		"QueryUserDiamond":   kitex.NewMethodInfo(queryUserDiamondHandler, newQueryUserDiamondArgs, newQueryUserDiamondResult, false),
+		"AddOrUpdateCredits": kitex.NewMethodInfo(addOrUpdateCreditsHandler, newAddOrUpdateCreditsArgs, newAddOrUpdateCreditsResult, false),
+		"GetUserCredits":     kitex.NewMethodInfo(getUserCreditsHandler, newGetUserCreditsArgs, newGetUserCreditsResult, false),
+		"GetCreditsRank":     kitex.NewMethodInfo(getCreditsRankHandler, newGetCreditsRankArgs, newGetCreditsRankResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName": "mc_nft",
@@ -142,6 +158,1242 @@ func (p *PingResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
+func userLoginHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(user.UserLoginRequest)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(mc_nft.NftService).UserLogin(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *UserLoginArgs:
+		success, err := handler.(mc_nft.NftService).UserLogin(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*UserLoginResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newUserLoginArgs() interface{} {
+	return &UserLoginArgs{}
+}
+
+func newUserLoginResult() interface{} {
+	return &UserLoginResult{}
+}
+
+type UserLoginArgs struct {
+	Req *user.UserLoginRequest
+}
+
+func (p *UserLoginArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, fmt.Errorf("No req in UserLoginArgs")
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *UserLoginArgs) Unmarshal(in []byte) error {
+	msg := new(user.UserLoginRequest)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var UserLoginArgs_Req_DEFAULT *user.UserLoginRequest
+
+func (p *UserLoginArgs) GetReq() *user.UserLoginRequest {
+	if !p.IsSetReq() {
+		return UserLoginArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *UserLoginArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+type UserLoginResult struct {
+	Success *user.UserLoginResponse
+}
+
+var UserLoginResult_Success_DEFAULT *user.UserLoginResponse
+
+func (p *UserLoginResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, fmt.Errorf("No req in UserLoginResult")
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *UserLoginResult) Unmarshal(in []byte) error {
+	msg := new(user.UserLoginResponse)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *UserLoginResult) GetSuccess() *user.UserLoginResponse {
+	if !p.IsSetSuccess() {
+		return UserLoginResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *UserLoginResult) SetSuccess(x interface{}) {
+	p.Success = x.(*user.UserLoginResponse)
+}
+
+func (p *UserLoginResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func smsSendHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(user.SmsSendRequest)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(mc_nft.NftService).SmsSend(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *SmsSendArgs:
+		success, err := handler.(mc_nft.NftService).SmsSend(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*SmsSendResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newSmsSendArgs() interface{} {
+	return &SmsSendArgs{}
+}
+
+func newSmsSendResult() interface{} {
+	return &SmsSendResult{}
+}
+
+type SmsSendArgs struct {
+	Req *user.SmsSendRequest
+}
+
+func (p *SmsSendArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, fmt.Errorf("No req in SmsSendArgs")
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *SmsSendArgs) Unmarshal(in []byte) error {
+	msg := new(user.SmsSendRequest)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var SmsSendArgs_Req_DEFAULT *user.SmsSendRequest
+
+func (p *SmsSendArgs) GetReq() *user.SmsSendRequest {
+	if !p.IsSetReq() {
+		return SmsSendArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *SmsSendArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+type SmsSendResult struct {
+	Success *user.SmsSendResponse
+}
+
+var SmsSendResult_Success_DEFAULT *user.SmsSendResponse
+
+func (p *SmsSendResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, fmt.Errorf("No req in SmsSendResult")
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *SmsSendResult) Unmarshal(in []byte) error {
+	msg := new(user.SmsSendResponse)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *SmsSendResult) GetSuccess() *user.SmsSendResponse {
+	if !p.IsSetSuccess() {
+		return SmsSendResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *SmsSendResult) SetSuccess(x interface{}) {
+	p.Success = x.(*user.SmsSendResponse)
+}
+
+func (p *SmsSendResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func authenticateHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(user.AuthenticateRequest)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(mc_nft.NftService).Authenticate(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *AuthenticateArgs:
+		success, err := handler.(mc_nft.NftService).Authenticate(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*AuthenticateResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newAuthenticateArgs() interface{} {
+	return &AuthenticateArgs{}
+}
+
+func newAuthenticateResult() interface{} {
+	return &AuthenticateResult{}
+}
+
+type AuthenticateArgs struct {
+	Req *user.AuthenticateRequest
+}
+
+func (p *AuthenticateArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, fmt.Errorf("No req in AuthenticateArgs")
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *AuthenticateArgs) Unmarshal(in []byte) error {
+	msg := new(user.AuthenticateRequest)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var AuthenticateArgs_Req_DEFAULT *user.AuthenticateRequest
+
+func (p *AuthenticateArgs) GetReq() *user.AuthenticateRequest {
+	if !p.IsSetReq() {
+		return AuthenticateArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *AuthenticateArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+type AuthenticateResult struct {
+	Success *user.AuthenticateResponse
+}
+
+var AuthenticateResult_Success_DEFAULT *user.AuthenticateResponse
+
+func (p *AuthenticateResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, fmt.Errorf("No req in AuthenticateResult")
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *AuthenticateResult) Unmarshal(in []byte) error {
+	msg := new(user.AuthenticateResponse)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *AuthenticateResult) GetSuccess() *user.AuthenticateResponse {
+	if !p.IsSetSuccess() {
+		return AuthenticateResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *AuthenticateResult) SetSuccess(x interface{}) {
+	p.Success = x.(*user.AuthenticateResponse)
+}
+
+func (p *AuthenticateResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func userDetailHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(user.UserDetailRequest)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(mc_nft.NftService).UserDetail(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *UserDetailArgs:
+		success, err := handler.(mc_nft.NftService).UserDetail(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*UserDetailResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newUserDetailArgs() interface{} {
+	return &UserDetailArgs{}
+}
+
+func newUserDetailResult() interface{} {
+	return &UserDetailResult{}
+}
+
+type UserDetailArgs struct {
+	Req *user.UserDetailRequest
+}
+
+func (p *UserDetailArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, fmt.Errorf("No req in UserDetailArgs")
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *UserDetailArgs) Unmarshal(in []byte) error {
+	msg := new(user.UserDetailRequest)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var UserDetailArgs_Req_DEFAULT *user.UserDetailRequest
+
+func (p *UserDetailArgs) GetReq() *user.UserDetailRequest {
+	if !p.IsSetReq() {
+		return UserDetailArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *UserDetailArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+type UserDetailResult struct {
+	Success *user.UserDetailResponse
+}
+
+var UserDetailResult_Success_DEFAULT *user.UserDetailResponse
+
+func (p *UserDetailResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, fmt.Errorf("No req in UserDetailResult")
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *UserDetailResult) Unmarshal(in []byte) error {
+	msg := new(user.UserDetailResponse)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *UserDetailResult) GetSuccess() *user.UserDetailResponse {
+	if !p.IsSetSuccess() {
+		return UserDetailResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *UserDetailResult) SetSuccess(x interface{}) {
+	p.Success = x.(*user.UserDetailResponse)
+}
+
+func (p *UserDetailResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func addPropsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(props.AddPropsRequest)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(mc_nft.NftService).AddProps(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *AddPropsArgs:
+		success, err := handler.(mc_nft.NftService).AddProps(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*AddPropsResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newAddPropsArgs() interface{} {
+	return &AddPropsArgs{}
+}
+
+func newAddPropsResult() interface{} {
+	return &AddPropsResult{}
+}
+
+type AddPropsArgs struct {
+	Req *props.AddPropsRequest
+}
+
+func (p *AddPropsArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, fmt.Errorf("No req in AddPropsArgs")
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *AddPropsArgs) Unmarshal(in []byte) error {
+	msg := new(props.AddPropsRequest)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var AddPropsArgs_Req_DEFAULT *props.AddPropsRequest
+
+func (p *AddPropsArgs) GetReq() *props.AddPropsRequest {
+	if !p.IsSetReq() {
+		return AddPropsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *AddPropsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+type AddPropsResult struct {
+	Success *props.AddPropsResponse
+}
+
+var AddPropsResult_Success_DEFAULT *props.AddPropsResponse
+
+func (p *AddPropsResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, fmt.Errorf("No req in AddPropsResult")
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *AddPropsResult) Unmarshal(in []byte) error {
+	msg := new(props.AddPropsResponse)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *AddPropsResult) GetSuccess() *props.AddPropsResponse {
+	if !p.IsSetSuccess() {
+		return AddPropsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *AddPropsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*props.AddPropsResponse)
+}
+
+func (p *AddPropsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func updatePropsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(props.UpdatePropsRequest)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(mc_nft.NftService).UpdateProps(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *UpdatePropsArgs:
+		success, err := handler.(mc_nft.NftService).UpdateProps(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*UpdatePropsResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newUpdatePropsArgs() interface{} {
+	return &UpdatePropsArgs{}
+}
+
+func newUpdatePropsResult() interface{} {
+	return &UpdatePropsResult{}
+}
+
+type UpdatePropsArgs struct {
+	Req *props.UpdatePropsRequest
+}
+
+func (p *UpdatePropsArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, fmt.Errorf("No req in UpdatePropsArgs")
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *UpdatePropsArgs) Unmarshal(in []byte) error {
+	msg := new(props.UpdatePropsRequest)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var UpdatePropsArgs_Req_DEFAULT *props.UpdatePropsRequest
+
+func (p *UpdatePropsArgs) GetReq() *props.UpdatePropsRequest {
+	if !p.IsSetReq() {
+		return UpdatePropsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *UpdatePropsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+type UpdatePropsResult struct {
+	Success *props.UpdatePropsResponse
+}
+
+var UpdatePropsResult_Success_DEFAULT *props.UpdatePropsResponse
+
+func (p *UpdatePropsResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, fmt.Errorf("No req in UpdatePropsResult")
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *UpdatePropsResult) Unmarshal(in []byte) error {
+	msg := new(props.UpdatePropsResponse)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *UpdatePropsResult) GetSuccess() *props.UpdatePropsResponse {
+	if !p.IsSetSuccess() {
+		return UpdatePropsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *UpdatePropsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*props.UpdatePropsResponse)
+}
+
+func (p *UpdatePropsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func addDiamondHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(virtual_currency.AddDiamondRequest)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(mc_nft.NftService).AddDiamond(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *AddDiamondArgs:
+		success, err := handler.(mc_nft.NftService).AddDiamond(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*AddDiamondResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newAddDiamondArgs() interface{} {
+	return &AddDiamondArgs{}
+}
+
+func newAddDiamondResult() interface{} {
+	return &AddDiamondResult{}
+}
+
+type AddDiamondArgs struct {
+	Req *virtual_currency.AddDiamondRequest
+}
+
+func (p *AddDiamondArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, fmt.Errorf("No req in AddDiamondArgs")
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *AddDiamondArgs) Unmarshal(in []byte) error {
+	msg := new(virtual_currency.AddDiamondRequest)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var AddDiamondArgs_Req_DEFAULT *virtual_currency.AddDiamondRequest
+
+func (p *AddDiamondArgs) GetReq() *virtual_currency.AddDiamondRequest {
+	if !p.IsSetReq() {
+		return AddDiamondArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *AddDiamondArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+type AddDiamondResult struct {
+	Success *virtual_currency.AddDiamondResponse
+}
+
+var AddDiamondResult_Success_DEFAULT *virtual_currency.AddDiamondResponse
+
+func (p *AddDiamondResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, fmt.Errorf("No req in AddDiamondResult")
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *AddDiamondResult) Unmarshal(in []byte) error {
+	msg := new(virtual_currency.AddDiamondResponse)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *AddDiamondResult) GetSuccess() *virtual_currency.AddDiamondResponse {
+	if !p.IsSetSuccess() {
+		return AddDiamondResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *AddDiamondResult) SetSuccess(x interface{}) {
+	p.Success = x.(*virtual_currency.AddDiamondResponse)
+}
+
+func (p *AddDiamondResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func consumeDiamondHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(virtual_currency.ConsumeDiamondRequest)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(mc_nft.NftService).ConsumeDiamond(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *ConsumeDiamondArgs:
+		success, err := handler.(mc_nft.NftService).ConsumeDiamond(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*ConsumeDiamondResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newConsumeDiamondArgs() interface{} {
+	return &ConsumeDiamondArgs{}
+}
+
+func newConsumeDiamondResult() interface{} {
+	return &ConsumeDiamondResult{}
+}
+
+type ConsumeDiamondArgs struct {
+	Req *virtual_currency.ConsumeDiamondRequest
+}
+
+func (p *ConsumeDiamondArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, fmt.Errorf("No req in ConsumeDiamondArgs")
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *ConsumeDiamondArgs) Unmarshal(in []byte) error {
+	msg := new(virtual_currency.ConsumeDiamondRequest)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var ConsumeDiamondArgs_Req_DEFAULT *virtual_currency.ConsumeDiamondRequest
+
+func (p *ConsumeDiamondArgs) GetReq() *virtual_currency.ConsumeDiamondRequest {
+	if !p.IsSetReq() {
+		return ConsumeDiamondArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *ConsumeDiamondArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+type ConsumeDiamondResult struct {
+	Success *virtual_currency.ConsumeDiamondResponse
+}
+
+var ConsumeDiamondResult_Success_DEFAULT *virtual_currency.ConsumeDiamondResponse
+
+func (p *ConsumeDiamondResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, fmt.Errorf("No req in ConsumeDiamondResult")
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *ConsumeDiamondResult) Unmarshal(in []byte) error {
+	msg := new(virtual_currency.ConsumeDiamondResponse)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *ConsumeDiamondResult) GetSuccess() *virtual_currency.ConsumeDiamondResponse {
+	if !p.IsSetSuccess() {
+		return ConsumeDiamondResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *ConsumeDiamondResult) SetSuccess(x interface{}) {
+	p.Success = x.(*virtual_currency.ConsumeDiamondResponse)
+}
+
+func (p *ConsumeDiamondResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func queryUserDiamondHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(virtual_currency.QueryUserDiamondRequest)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(mc_nft.NftService).QueryUserDiamond(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *QueryUserDiamondArgs:
+		success, err := handler.(mc_nft.NftService).QueryUserDiamond(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*QueryUserDiamondResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newQueryUserDiamondArgs() interface{} {
+	return &QueryUserDiamondArgs{}
+}
+
+func newQueryUserDiamondResult() interface{} {
+	return &QueryUserDiamondResult{}
+}
+
+type QueryUserDiamondArgs struct {
+	Req *virtual_currency.QueryUserDiamondRequest
+}
+
+func (p *QueryUserDiamondArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, fmt.Errorf("No req in QueryUserDiamondArgs")
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *QueryUserDiamondArgs) Unmarshal(in []byte) error {
+	msg := new(virtual_currency.QueryUserDiamondRequest)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var QueryUserDiamondArgs_Req_DEFAULT *virtual_currency.QueryUserDiamondRequest
+
+func (p *QueryUserDiamondArgs) GetReq() *virtual_currency.QueryUserDiamondRequest {
+	if !p.IsSetReq() {
+		return QueryUserDiamondArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *QueryUserDiamondArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+type QueryUserDiamondResult struct {
+	Success *virtual_currency.QueryUserDiamondResponse
+}
+
+var QueryUserDiamondResult_Success_DEFAULT *virtual_currency.QueryUserDiamondResponse
+
+func (p *QueryUserDiamondResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, fmt.Errorf("No req in QueryUserDiamondResult")
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *QueryUserDiamondResult) Unmarshal(in []byte) error {
+	msg := new(virtual_currency.QueryUserDiamondResponse)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *QueryUserDiamondResult) GetSuccess() *virtual_currency.QueryUserDiamondResponse {
+	if !p.IsSetSuccess() {
+		return QueryUserDiamondResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *QueryUserDiamondResult) SetSuccess(x interface{}) {
+	p.Success = x.(*virtual_currency.QueryUserDiamondResponse)
+}
+
+func (p *QueryUserDiamondResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func addOrUpdateCreditsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(credits.AddOrUpdateCreditsRequest)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(mc_nft.NftService).AddOrUpdateCredits(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *AddOrUpdateCreditsArgs:
+		success, err := handler.(mc_nft.NftService).AddOrUpdateCredits(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*AddOrUpdateCreditsResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newAddOrUpdateCreditsArgs() interface{} {
+	return &AddOrUpdateCreditsArgs{}
+}
+
+func newAddOrUpdateCreditsResult() interface{} {
+	return &AddOrUpdateCreditsResult{}
+}
+
+type AddOrUpdateCreditsArgs struct {
+	Req *credits.AddOrUpdateCreditsRequest
+}
+
+func (p *AddOrUpdateCreditsArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, fmt.Errorf("No req in AddOrUpdateCreditsArgs")
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *AddOrUpdateCreditsArgs) Unmarshal(in []byte) error {
+	msg := new(credits.AddOrUpdateCreditsRequest)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var AddOrUpdateCreditsArgs_Req_DEFAULT *credits.AddOrUpdateCreditsRequest
+
+func (p *AddOrUpdateCreditsArgs) GetReq() *credits.AddOrUpdateCreditsRequest {
+	if !p.IsSetReq() {
+		return AddOrUpdateCreditsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *AddOrUpdateCreditsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+type AddOrUpdateCreditsResult struct {
+	Success *credits.AddOrUpdateCreditsResponse
+}
+
+var AddOrUpdateCreditsResult_Success_DEFAULT *credits.AddOrUpdateCreditsResponse
+
+func (p *AddOrUpdateCreditsResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, fmt.Errorf("No req in AddOrUpdateCreditsResult")
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *AddOrUpdateCreditsResult) Unmarshal(in []byte) error {
+	msg := new(credits.AddOrUpdateCreditsResponse)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *AddOrUpdateCreditsResult) GetSuccess() *credits.AddOrUpdateCreditsResponse {
+	if !p.IsSetSuccess() {
+		return AddOrUpdateCreditsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *AddOrUpdateCreditsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*credits.AddOrUpdateCreditsResponse)
+}
+
+func (p *AddOrUpdateCreditsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func getUserCreditsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(credits.GetUserCreditsRequest)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(mc_nft.NftService).GetUserCredits(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetUserCreditsArgs:
+		success, err := handler.(mc_nft.NftService).GetUserCredits(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetUserCreditsResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetUserCreditsArgs() interface{} {
+	return &GetUserCreditsArgs{}
+}
+
+func newGetUserCreditsResult() interface{} {
+	return &GetUserCreditsResult{}
+}
+
+type GetUserCreditsArgs struct {
+	Req *credits.GetUserCreditsRequest
+}
+
+func (p *GetUserCreditsArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, fmt.Errorf("No req in GetUserCreditsArgs")
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetUserCreditsArgs) Unmarshal(in []byte) error {
+	msg := new(credits.GetUserCreditsRequest)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetUserCreditsArgs_Req_DEFAULT *credits.GetUserCreditsRequest
+
+func (p *GetUserCreditsArgs) GetReq() *credits.GetUserCreditsRequest {
+	if !p.IsSetReq() {
+		return GetUserCreditsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetUserCreditsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+type GetUserCreditsResult struct {
+	Success *credits.GetUserCreditsResponse
+}
+
+var GetUserCreditsResult_Success_DEFAULT *credits.GetUserCreditsResponse
+
+func (p *GetUserCreditsResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, fmt.Errorf("No req in GetUserCreditsResult")
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetUserCreditsResult) Unmarshal(in []byte) error {
+	msg := new(credits.GetUserCreditsResponse)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetUserCreditsResult) GetSuccess() *credits.GetUserCreditsResponse {
+	if !p.IsSetSuccess() {
+		return GetUserCreditsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetUserCreditsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*credits.GetUserCreditsResponse)
+}
+
+func (p *GetUserCreditsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func getCreditsRankHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(credits.GetCreditsRankRequest)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(mc_nft.NftService).GetCreditsRank(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetCreditsRankArgs:
+		success, err := handler.(mc_nft.NftService).GetCreditsRank(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetCreditsRankResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetCreditsRankArgs() interface{} {
+	return &GetCreditsRankArgs{}
+}
+
+func newGetCreditsRankResult() interface{} {
+	return &GetCreditsRankResult{}
+}
+
+type GetCreditsRankArgs struct {
+	Req *credits.GetCreditsRankRequest
+}
+
+func (p *GetCreditsRankArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, fmt.Errorf("No req in GetCreditsRankArgs")
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetCreditsRankArgs) Unmarshal(in []byte) error {
+	msg := new(credits.GetCreditsRankRequest)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetCreditsRankArgs_Req_DEFAULT *credits.GetCreditsRankRequest
+
+func (p *GetCreditsRankArgs) GetReq() *credits.GetCreditsRankRequest {
+	if !p.IsSetReq() {
+		return GetCreditsRankArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetCreditsRankArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+type GetCreditsRankResult struct {
+	Success *credits.GetCreditsRankResponse
+}
+
+var GetCreditsRankResult_Success_DEFAULT *credits.GetCreditsRankResponse
+
+func (p *GetCreditsRankResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, fmt.Errorf("No req in GetCreditsRankResult")
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetCreditsRankResult) Unmarshal(in []byte) error {
+	msg := new(credits.GetCreditsRankResponse)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetCreditsRankResult) GetSuccess() *credits.GetCreditsRankResponse {
+	if !p.IsSetSuccess() {
+		return GetCreditsRankResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetCreditsRankResult) SetSuccess(x interface{}) {
+	p.Success = x.(*credits.GetCreditsRankResponse)
+}
+
+func (p *GetCreditsRankResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -157,6 +1409,126 @@ func (p *kClient) Ping(ctx context.Context, Req *ping.PingRequest) (r *ping.Ping
 	_args.Req = Req
 	var _result PingResult
 	if err = p.c.Call(ctx, "Ping", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) UserLogin(ctx context.Context, Req *user.UserLoginRequest) (r *user.UserLoginResponse, err error) {
+	var _args UserLoginArgs
+	_args.Req = Req
+	var _result UserLoginResult
+	if err = p.c.Call(ctx, "UserLogin", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) SmsSend(ctx context.Context, Req *user.SmsSendRequest) (r *user.SmsSendResponse, err error) {
+	var _args SmsSendArgs
+	_args.Req = Req
+	var _result SmsSendResult
+	if err = p.c.Call(ctx, "SmsSend", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) Authenticate(ctx context.Context, Req *user.AuthenticateRequest) (r *user.AuthenticateResponse, err error) {
+	var _args AuthenticateArgs
+	_args.Req = Req
+	var _result AuthenticateResult
+	if err = p.c.Call(ctx, "Authenticate", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) UserDetail(ctx context.Context, Req *user.UserDetailRequest) (r *user.UserDetailResponse, err error) {
+	var _args UserDetailArgs
+	_args.Req = Req
+	var _result UserDetailResult
+	if err = p.c.Call(ctx, "UserDetail", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) AddProps(ctx context.Context, Req *props.AddPropsRequest) (r *props.AddPropsResponse, err error) {
+	var _args AddPropsArgs
+	_args.Req = Req
+	var _result AddPropsResult
+	if err = p.c.Call(ctx, "AddProps", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) UpdateProps(ctx context.Context, Req *props.UpdatePropsRequest) (r *props.UpdatePropsResponse, err error) {
+	var _args UpdatePropsArgs
+	_args.Req = Req
+	var _result UpdatePropsResult
+	if err = p.c.Call(ctx, "UpdateProps", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) AddDiamond(ctx context.Context, Req *virtual_currency.AddDiamondRequest) (r *virtual_currency.AddDiamondResponse, err error) {
+	var _args AddDiamondArgs
+	_args.Req = Req
+	var _result AddDiamondResult
+	if err = p.c.Call(ctx, "AddDiamond", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) ConsumeDiamond(ctx context.Context, Req *virtual_currency.ConsumeDiamondRequest) (r *virtual_currency.ConsumeDiamondResponse, err error) {
+	var _args ConsumeDiamondArgs
+	_args.Req = Req
+	var _result ConsumeDiamondResult
+	if err = p.c.Call(ctx, "ConsumeDiamond", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) QueryUserDiamond(ctx context.Context, Req *virtual_currency.QueryUserDiamondRequest) (r *virtual_currency.QueryUserDiamondResponse, err error) {
+	var _args QueryUserDiamondArgs
+	_args.Req = Req
+	var _result QueryUserDiamondResult
+	if err = p.c.Call(ctx, "QueryUserDiamond", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) AddOrUpdateCredits(ctx context.Context, Req *credits.AddOrUpdateCreditsRequest) (r *credits.AddOrUpdateCreditsResponse, err error) {
+	var _args AddOrUpdateCreditsArgs
+	_args.Req = Req
+	var _result AddOrUpdateCreditsResult
+	if err = p.c.Call(ctx, "AddOrUpdateCredits", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetUserCredits(ctx context.Context, Req *credits.GetUserCreditsRequest) (r *credits.GetUserCreditsResponse, err error) {
+	var _args GetUserCreditsArgs
+	_args.Req = Req
+	var _result GetUserCreditsResult
+	if err = p.c.Call(ctx, "GetUserCredits", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetCreditsRank(ctx context.Context, Req *credits.GetCreditsRankRequest) (r *credits.GetCreditsRankResponse, err error) {
+	var _args GetCreditsRankArgs
+	_args.Req = Req
+	var _result GetCreditsRankResult
+	if err = p.c.Call(ctx, "GetCreditsRank", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

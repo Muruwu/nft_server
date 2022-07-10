@@ -4,8 +4,33 @@ package mc_nft;
 option go_package = "mc_nft";
 
 import "ping/ping.proto";
+import "credits/credits.proto";
+import "props/props.proto";
+import "user/user.proto";
+import "virtual_currency/diamond.proto";
 
 
 service NftService {
+    // ping 健康检查
     rpc Ping (ping.PingRequest) returns (ping.PingResponse);
+
+    // user 相关接口
+    rpc UserLogin (user.UserLoginRequest) returns (user.UserLoginResponse);
+    rpc SmsSend (user.SmsSendRequest) returns (user.SmsSendResponse);
+    rpc Authenticate (user.AuthenticateRequest) returns (user.AuthenticateResponse);
+    rpc UserDetail (user.UserDetailRequest) returns (user.UserDetailResponse);
+
+    // props 道具接口
+    rpc AddProps (props.AddPropsRequest) returns (props.AddPropsResponse);
+    rpc UpdateProps (props.UpdatePropsRequest) returns (props.UpdatePropsResponse);
+
+    // diamond 钻石系统
+    rpc AddDiamond (virtual_currency.AddDiamondRequest) returns (virtual_currency.AddDiamondResponse);
+    rpc ConsumeDiamond (virtual_currency.ConsumeDiamondRequest) returns (virtual_currency.ConsumeDiamondResponse);
+    rpc QueryUserDiamond (virtual_currency.QueryUserDiamondRequest) returns (virtual_currency.QueryUserDiamondResponse);
+
+    // credits 积分接口
+    rpc AddOrUpdateCredits (credits.AddOrUpdateCreditsRequest) returns (credits.AddOrUpdateCreditsResponse);
+    rpc GetUserCredits (credits.GetUserCreditsRequest) returns (credits.GetUserCreditsResponse);
+    rpc GetCreditsRank (credits.GetCreditsRankRequest) returns (credits.GetCreditsRankResponse);
 }
