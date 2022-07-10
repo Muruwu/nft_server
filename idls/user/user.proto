@@ -7,6 +7,8 @@ option go_package = "user";
 message UserLoginRequest {
     string phone = 1; // 手机号
     string code = 2; // 验证码
+    string invite_code = 3; // 邀请码
+    string invite_group_code = 4; // 邀请渠道码
 }
 
 message UserLoginResponse {
@@ -20,18 +22,23 @@ message SmsSendRequest {
 message SmsSendResponse {
 }
 
-message PingRequest {
-    string name = 1;
+message AuthenticateRequest {
+    string real_name = 1; // 真是姓名
+    string id_card = 2; // 身份证号码 18 位
+    string phone = 3; // 手机号
+    string sms_code = 4; // 手机认证码
 }
 
-message PingResponse {
-    string msg = 2;
+message AuthenticateResponse {
 }
 
-message PingRequest {
-    string name = 1;
+message UserDetailRequest {
+    int64 uid = 1; // 用户uid
 }
 
-message PingResponse {
-    string msg = 2;
+message UserDetailResponse {
+    string nick_name = 1; // 昵称
+    string avatar = 2; // 头像URL
+    string nft_wallet = 3; // nft 钱包地址
+    bool is_certified = 4; // 是否认证
 }
