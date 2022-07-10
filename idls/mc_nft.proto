@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package mc_nft;
+option go_package = "mc_nft";
+
+import "ping/ping.proto";
+
+
+service NftService {
+    rpc Ping (ping.PingRequest) returns (ping.PingResponse);
+}

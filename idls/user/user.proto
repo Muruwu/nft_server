@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package user;
+option go_package = "user";
+
+// 用户登录
+message UserLoginRequest {
+    string phone = 1; // 手机号
+    string code = 2; // 验证码
+}
+
+message UserLoginResponse {
+    string auth_token = 1; // 登录 token
+}
+
+message SmsSendRequest {
+    string phone = 1; // 手机号
+}
+
+message SmsSendResponse {
+}
+
+message PingRequest {
+    string name = 1;
+}
+
+message PingResponse {
+    string msg = 2;
+}
+
+message PingRequest {
+    string name = 1;
+}
+
+message PingResponse {
+    string msg = 2;
+}

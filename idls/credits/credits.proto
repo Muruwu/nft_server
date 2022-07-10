@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package credits;
+option go_package = "credits";
+
+message PingRequest {
+    string name = 1;
+}
+
+message PingResponse {
+    string msg = 2;
+}

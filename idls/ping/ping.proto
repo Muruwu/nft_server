@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package ping;
+option go_package = "ping";
+
+message PingRequest {
+}
+
+message PingResponse {
+    string msg = 1;
+}

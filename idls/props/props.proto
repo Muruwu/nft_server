@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package props;
+option go_package = "props";
+
+message PingRequest {
+    string name = 1;
+}
+
+message PingResponse {
+    string msg = 2;
+}
