@@ -3,6 +3,8 @@ syntax = "proto3";
 package credits;
 option go_package = "credits";
 
+import "base/base.proto";
+
 enum CreditsSource {
     CreditsSource_Unknown = 0;
     CreditsSource_CollectionChange = 1; // 藏品变更
@@ -21,18 +23,24 @@ message AddOrUpdateCreditsRequest {
     CreditsChangeType change_type = 3; // 变更类型
     int32 amount = 4; // 变更大小
     string record = 5; // 变更来源记录， 如藏品id
+
+    base.Base Base = 255;
 }
 
 message AddOrUpdateCreditsResponse {
-
+    base.BaseResp BaseResp = 255;
 }
 
 message GetUserCreditsRequest {
     int64 uid = 1; // 用户uid
+
+    base.Base Base = 255;
 }
 
 message GetUserCreditsResponse {
     int32 credits_amount = 1; // 积分数量
+
+    base.BaseResp BaseResp = 255;
 }
 
 message RankItem {
@@ -44,8 +52,11 @@ message RankItem {
 }
 
 message GetCreditsRankRequest {
+    base.Base Base = 255;
 }
 
 message GetCreditsRankResponse {
     repeated RankItem items = 1;
+
+    base.BaseResp BaseResp = 255;
 }

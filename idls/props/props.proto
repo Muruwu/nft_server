@@ -3,26 +3,77 @@ syntax = "proto3";
 package props;
 option go_package = "props";
 
+import "base/base.proto";
+
 message PropsInfo {
     string name = 1;
     string image_url = 2;
-
 }
 
 message AddPropsRequest {
     repeated PropsInfo props_list = 1;
+
+    base.Base Base = 255;
 }
 
 message AddPropsResponse {
+    base.BaseResp BaseResp = 255;
 }
 
 message UpdatePropsRequest {
     int32 props_id = 1;
 
+    base.Base Base = 255;
 }
 
 message UpdatePropsResponse {
+    base.BaseResp BaseResp = 255;
 }
+
+
 
 // 用户：
 // 发放、展示、使用 props
+message DistributePropsRequest {
+    message PropsItem {
+        int32 props_id = 1;
+        int32 amount = 2;
+    }
+    repeated PropsItem props_items = 1;
+    int64 uid = 2;
+    string seq_id = 3;
+
+    base.Base Base = 255;
+}
+
+message DistributePropsResponse {
+    base.BaseResp BaseResp = 255;
+}
+
+// 查询道具
+message QueryPropsRequest {
+    int64 uid = 1;
+    repeated int32 props_ids = 2;
+
+    int32 limit = 3;
+    int32 offset = 4;
+    base.Base Base = 255;
+}
+
+message QueryPropsResponse {
+    repeated PropsInfo props_list = 1;
+    int32 props_cnt = 2;
+
+    base.BaseResp BaseResp = 255;
+}
+
+// 核销道具
+message ConsumePropsRequest {
+    int32 props_id = 1;
+
+    base.Base Base = 255;
+}
+
+message ConsumePropsResponse {
+    base.BaseResp BaseResp = 255;
+}

@@ -3,23 +3,32 @@ syntax = "proto3";
 package user;
 option go_package = "user";
 
+import "base/base.proto";
+
 // 用户登录
 message UserLoginRequest {
     string phone = 1; // 手机号
     string code = 2; // 验证码
     string invite_code = 3; // 邀请码
     string invite_group_code = 4; // 邀请渠道码
+
+    base.Base Base = 255;
 }
 
 message UserLoginResponse {
     string auth_token = 1; // 登录 token
+
+    base.BaseResp BaseResp = 255;
 }
 
 message SmsSendRequest {
     string phone = 1; // 手机号
+
+    base.Base Base = 255;
 }
 
 message SmsSendResponse {
+    base.BaseResp BaseResp = 255;
 }
 
 message AuthenticateRequest {
@@ -27,13 +36,18 @@ message AuthenticateRequest {
     string id_card = 2; // 身份证号码 18 位
     string phone = 3; // 手机号
     string sms_code = 4; // 手机认证码
+
+    base.Base Base = 255;
 }
 
 message AuthenticateResponse {
+    base.BaseResp BaseResp = 255;
 }
 
 message UserDetailRequest {
     int64 uid = 1; // 用户uid
+
+    base.Base Base = 255;
 }
 
 message UserDetailResponse {
@@ -41,4 +55,6 @@ message UserDetailResponse {
     string avatar = 2; // 头像URL
     string nft_wallet = 3; // nft 钱包地址
     bool is_certified = 4; // 是否认证
+
+    base.BaseResp BaseResp = 255;
 }

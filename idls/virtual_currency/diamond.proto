@@ -3,6 +3,7 @@ syntax = "proto3";
 package virtual_currency;
 option go_package = "virtual_currency";
 
+import "base/base.proto";
 
 enum DiamondSource {
     DiamondSource_Unknown = 0;
@@ -14,25 +15,35 @@ message AddDiamondRequest {
     int64 uid = 1;
     DiamondSource source = 2; // 获取渠道
     int32 amount = 3; // 数量
+
+    base.Base Base = 255;
 }
 
 message AddDiamondResponse {
+    base.BaseResp BaseResp = 255;
 }
 
 // 消费钻石
 message ConsumeDiamondRequest {
     int64 uid = 1;
     int32 amount = 2; // 数量
+
+    base.Base Base = 255;
 }
 
 message ConsumeDiamondResponse {
+    base.BaseResp BaseResp = 255;
 }
 
 // 查询钻石
 message QueryUserDiamondRequest {
     int64 uid = 1;
+
+    base.Base Base = 255;
 }
 
 message QueryUserDiamondResponse {
     int32 amount = 1;
+
+    base.BaseResp BaseResp = 255;
 }

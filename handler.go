@@ -13,6 +13,9 @@ import (
 // NftServiceImpl implements the last service interface defined in the IDL.
 type NftServiceImpl struct{}
 
+type BaseResponse interface {
+}
+
 // Ping implements the NftServiceImpl interface.
 func (s *NftServiceImpl) Ping(ctx context.Context, req *ping.PingRequest) (resp *ping.PingResponse, err error) {
 	resp = &ping.PingResponse{Msg: "pong"}
