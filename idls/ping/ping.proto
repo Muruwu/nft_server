@@ -3,9 +3,14 @@ syntax = "proto3";
 package ping;
 option go_package = "ping";
 
+import "base/base.proto";
+
 message PingRequest {
+    base.Base Base = 255;
 }
 
 message PingResponse {
     string msg = 1;
+
+    base.BaseResp BaseResp = 255;
 }

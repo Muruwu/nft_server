@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package base;
+option go_package = "base";
+
+message Base {
+  string caller = 1; // 调用方
+  string addr = 2; // 调用地址
+  map<string, string> extra = 3; // 附加信息
+}
+
+message BaseResp {
+  string message = 1; // 状态信息
+  int32 code = 2; // 状态码
+  map<string, string> extra = 3; // 附加信息
+}
