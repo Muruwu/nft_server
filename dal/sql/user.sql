@@ -1,6 +1,6 @@
 create table user_info
-{
-    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREAMENT comment '主键id',
+(
+    `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT comment '主键id',
     `nickname` VARCHAR(128) NOT NULL comment '用户昵称',
     `avatar` VARCHAR(128) NOT NULL comment '用户头像',
     `real_name` VARCHAR(128) NULL comment '真实姓名',
@@ -17,7 +17,11 @@ create table user_info
     `diamond_cnt` INT NOT NULL DEFAULT 0 comment '用户钻石数',
     `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP comment '创建时间',
     `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
-} ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 comment '用户基本信息表'
+    PRIMARY KEY (`id`),
+    KEY `idx_certified_phone` (`certified_phone`),
+    KEY `idx_invite_code` (`invite_code`),
+    KEY `idx_chain_account_id` (`chain_account_id`)
+ ) ENGINE = InnoDB AUTO_INCREMENT = 1655350 DEFAULT CHARSET = utf8mb4 comment '用户基本信息表';
 
 
 -- create table user_addition_info
