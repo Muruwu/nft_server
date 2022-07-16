@@ -10,7 +10,7 @@ create table props_info
     `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
     PRIMARY KEY (`id`),
     KEY `idx_props_id` (`props_id`)
- ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 comment '道具流水表';
+ ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 comment '道具信息表';
 
 create table user_props
 (
@@ -21,7 +21,7 @@ create table user_props
     `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP comment '创建时间',
     `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
     PRIMARY KEY (`id`),
-    KEY `idx_user_id` (`user_id`)
+    UNIQUE KEY `idx_user_props_id` (`user_id`, `props_id`)
  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 comment '用户道具表';
 
 
