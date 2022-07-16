@@ -17,6 +17,7 @@ type PropsRecord struct {
 	PropsID    int64      `gorm:"column:props_id;not null" json:"props_id"`          // 道具id
 	DiffNum    int32      `gorm:"column:diff_num;not null" json:"diff_num"`          // 道具变更数量
 	RecordType int32      `gorm:"column:record_type;not null" json:"record_type"`    // 道具记录类型: 发放、消耗、转移
+	RecordStr  *string    `gorm:"column:record_str" json:"record_str"`               // 道具记录描述
 	CreatedAt  *time.Time `gorm:"column:created_at" json:"created_at"`               // 创建时间
 	UpdatedAt  *time.Time `gorm:"column:updated_at" json:"updated_at"`               // 更新时间
 }

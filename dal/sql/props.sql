@@ -36,6 +36,6 @@ create table props_record
     `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP comment '创建时间',
     `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
     PRIMARY KEY (`id`),
-    KEY `idx_props_record_user_id` (`user_id`)
+    UNIQUE KEY `idx_props_user_record_id` (`user_id`, `props_id`)
  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 comment '道具流水表';
 

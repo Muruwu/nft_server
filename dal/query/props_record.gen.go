@@ -32,6 +32,7 @@ func newPropsRecord(db *gorm.DB) propsRecord {
 	_propsRecord.PropsID = field.NewInt64(tableName, "props_id")
 	_propsRecord.DiffNum = field.NewInt32(tableName, "diff_num")
 	_propsRecord.RecordType = field.NewInt32(tableName, "record_type")
+	_propsRecord.RecordStr = field.NewString(tableName, "record_str")
 	_propsRecord.CreatedAt = field.NewTime(tableName, "created_at")
 	_propsRecord.UpdatedAt = field.NewTime(tableName, "updated_at")
 
@@ -49,6 +50,7 @@ type propsRecord struct {
 	PropsID    field.Int64
 	DiffNum    field.Int32
 	RecordType field.Int32
+	RecordStr  field.String
 	CreatedAt  field.Time
 	UpdatedAt  field.Time
 
@@ -72,6 +74,7 @@ func (p *propsRecord) updateTableName(table string) *propsRecord {
 	p.PropsID = field.NewInt64(table, "props_id")
 	p.DiffNum = field.NewInt32(table, "diff_num")
 	p.RecordType = field.NewInt32(table, "record_type")
+	p.RecordStr = field.NewString(table, "record_str")
 	p.CreatedAt = field.NewTime(table, "created_at")
 	p.UpdatedAt = field.NewTime(table, "updated_at")
 
@@ -98,12 +101,13 @@ func (p *propsRecord) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (p *propsRecord) fillFieldMap() {
-	p.fieldMap = make(map[string]field.Expr, 7)
+	p.fieldMap = make(map[string]field.Expr, 8)
 	p.fieldMap["id"] = p.ID
 	p.fieldMap["user_id"] = p.UserID
 	p.fieldMap["props_id"] = p.PropsID
 	p.fieldMap["diff_num"] = p.DiffNum
 	p.fieldMap["record_type"] = p.RecordType
+	p.fieldMap["record_str"] = p.RecordStr
 	p.fieldMap["created_at"] = p.CreatedAt
 	p.fieldMap["updated_at"] = p.UpdatedAt
 }
