@@ -32,6 +32,7 @@ create table props_record
     `props_id` BIGINT(20) UNSIGNED NOT NULL comment '道具id',
     `diff_num` INT NOT NULL DEFAULT 0 comment '道具变更数量',
     `record_type` INT NOT NULL DEFAULT 0 comment '道具记录类型: 发放、消耗、转移',
+    `record_str` VARCHAR(128) NULL comment '道具记录描述',
     `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP comment '创建时间',
     `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '更新时间',
     PRIMARY KEY (`id`),

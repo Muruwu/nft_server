@@ -22,6 +22,9 @@ type Client interface {
 	UserDetail(ctx context.Context, Req *user.UserDetailRequest, callOptions ...callopt.Option) (r *user.UserDetailResponse, err error)
 	AddProps(ctx context.Context, Req *props.AddPropsRequest, callOptions ...callopt.Option) (r *props.AddPropsResponse, err error)
 	UpdateProps(ctx context.Context, Req *props.UpdatePropsRequest, callOptions ...callopt.Option) (r *props.UpdatePropsResponse, err error)
+	DistributeProps(ctx context.Context, Req *props.DistributePropsRequest, callOptions ...callopt.Option) (r *props.DistributePropsResponse, err error)
+	QueryProps(ctx context.Context, Req *props.QueryPropsRequest, callOptions ...callopt.Option) (r *props.QueryPropsResponse, err error)
+	ConsumeProps(ctx context.Context, Req *props.ConsumePropsRequest, callOptions ...callopt.Option) (r *props.ConsumePropsResponse, err error)
 	AddDiamond(ctx context.Context, Req *virtual_currency.AddDiamondRequest, callOptions ...callopt.Option) (r *virtual_currency.AddDiamondResponse, err error)
 	ConsumeDiamond(ctx context.Context, Req *virtual_currency.ConsumeDiamondRequest, callOptions ...callopt.Option) (r *virtual_currency.ConsumeDiamondResponse, err error)
 	QueryUserDiamond(ctx context.Context, Req *virtual_currency.QueryUserDiamondRequest, callOptions ...callopt.Option) (r *virtual_currency.QueryUserDiamondResponse, err error)
@@ -92,6 +95,21 @@ func (p *kNftServiceClient) AddProps(ctx context.Context, Req *props.AddPropsReq
 func (p *kNftServiceClient) UpdateProps(ctx context.Context, Req *props.UpdatePropsRequest, callOptions ...callopt.Option) (r *props.UpdatePropsResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.UpdateProps(ctx, Req)
+}
+
+func (p *kNftServiceClient) DistributeProps(ctx context.Context, Req *props.DistributePropsRequest, callOptions ...callopt.Option) (r *props.DistributePropsResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DistributeProps(ctx, Req)
+}
+
+func (p *kNftServiceClient) QueryProps(ctx context.Context, Req *props.QueryPropsRequest, callOptions ...callopt.Option) (r *props.QueryPropsResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.QueryProps(ctx, Req)
+}
+
+func (p *kNftServiceClient) ConsumeProps(ctx context.Context, Req *props.ConsumePropsRequest, callOptions ...callopt.Option) (r *props.ConsumePropsResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.ConsumeProps(ctx, Req)
 }
 
 func (p *kNftServiceClient) AddDiamond(ctx context.Context, Req *virtual_currency.AddDiamondRequest, callOptions ...callopt.Option) (r *virtual_currency.AddDiamondResponse, err error) {

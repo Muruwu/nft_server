@@ -6,8 +6,9 @@ option go_package = "props";
 import "base/base.proto";
 
 message PropsInfo {
-    string name = 1;
-    string image_url = 2;
+    string name = 1; // 名称
+    string image_url = 2; // 图片url
+    string desc = 3; // 描述
 }
 
 message AddPropsRequest {
@@ -22,7 +23,7 @@ message AddPropsResponse {
 
 message UpdatePropsRequest {
     int32 props_id = 1;
-
+    PropsInfo props_info = 2;
     base.Base Base = 255;
 }
 
@@ -69,8 +70,13 @@ message QueryPropsResponse {
 
 // 核销道具
 message ConsumePropsRequest {
-    int32 props_id = 1;
-
+    message PropsItem {
+        int32 props_id = 1;
+        int32 amount = 2;
+    }
+    repeated PropsItem props_items = 1;
+    int64 uid = 2;
+    string record_str = 3; // 如订单id、订单号等    
     base.Base Base = 255;
 }
 

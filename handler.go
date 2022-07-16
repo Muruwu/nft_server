@@ -93,3 +93,21 @@ func (s *NftServiceImpl) GetCreditsRank(ctx context.Context, req *credits.GetCre
 	// TODO: Your code here...
 	return
 }
+
+// DistributeProps implements the NftServiceImpl interface.
+func (s *NftServiceImpl) DistributeProps(ctx context.Context, req *props.DistributePropsRequest) (resp *props.DistributePropsResponse, err error) {
+	// TODO: Your code here...
+	return
+}
+
+// QueryProps implements the NftServiceImpl interface.
+func (s *NftServiceImpl) QueryProps(ctx context.Context, req *props.QueryPropsRequest) (resp *props.QueryPropsResponse, err error) {
+	// TODO: Your code here...
+	return
+}
+
+// ConsumeProps implements the NftServiceImpl interface.
+func (s *NftServiceImpl) ConsumeProps(ctx context.Context, req *props.ConsumePropsRequest) (resp *props.ConsumePropsResponse, err error) {
+	// TODO: Your code here...
+	return
+}

@@ -34,6 +34,9 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"UserDetail":         kitex.NewMethodInfo(userDetailHandler, newUserDetailArgs, newUserDetailResult, false),
 		"AddProps":           kitex.NewMethodInfo(addPropsHandler, newAddPropsArgs, newAddPropsResult, false),
 		"UpdateProps":        kitex.NewMethodInfo(updatePropsHandler, newUpdatePropsArgs, newUpdatePropsResult, false),
+		"DistributeProps":    kitex.NewMethodInfo(distributePropsHandler, newDistributePropsArgs, newDistributePropsResult, false),
+		"QueryProps":         kitex.NewMethodInfo(queryPropsHandler, newQueryPropsArgs, newQueryPropsResult, false),
+		"ConsumeProps":       kitex.NewMethodInfo(consumePropsHandler, newConsumePropsArgs, newConsumePropsResult, false),
 		"AddDiamond":         kitex.NewMethodInfo(addDiamondHandler, newAddDiamondArgs, newAddDiamondResult, false),
 		"ConsumeDiamond":     kitex.NewMethodInfo(consumeDiamondHandler, newConsumeDiamondArgs, newConsumeDiamondResult, false),
 		"QueryUserDiamond":   kitex.NewMethodInfo(queryUserDiamondHandler, newQueryUserDiamondArgs, newQueryUserDiamondResult, false),
@@ -776,6 +779,315 @@ func (p *UpdatePropsResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
+func distributePropsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(props.DistributePropsRequest)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(mc_nft.NftService).DistributeProps(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *DistributePropsArgs:
+		success, err := handler.(mc_nft.NftService).DistributeProps(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*DistributePropsResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newDistributePropsArgs() interface{} {
+	return &DistributePropsArgs{}
+}
+
+func newDistributePropsResult() interface{} {
+	return &DistributePropsResult{}
+}
+
+type DistributePropsArgs struct {
+	Req *props.DistributePropsRequest
+}
+
+func (p *DistributePropsArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, fmt.Errorf("No req in DistributePropsArgs")
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *DistributePropsArgs) Unmarshal(in []byte) error {
+	msg := new(props.DistributePropsRequest)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var DistributePropsArgs_Req_DEFAULT *props.DistributePropsRequest
+
+func (p *DistributePropsArgs) GetReq() *props.DistributePropsRequest {
+	if !p.IsSetReq() {
+		return DistributePropsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *DistributePropsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+type DistributePropsResult struct {
+	Success *props.DistributePropsResponse
+}
+
+var DistributePropsResult_Success_DEFAULT *props.DistributePropsResponse
+
+func (p *DistributePropsResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, fmt.Errorf("No req in DistributePropsResult")
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *DistributePropsResult) Unmarshal(in []byte) error {
+	msg := new(props.DistributePropsResponse)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *DistributePropsResult) GetSuccess() *props.DistributePropsResponse {
+	if !p.IsSetSuccess() {
+		return DistributePropsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *DistributePropsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*props.DistributePropsResponse)
+}
+
+func (p *DistributePropsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func queryPropsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(props.QueryPropsRequest)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(mc_nft.NftService).QueryProps(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *QueryPropsArgs:
+		success, err := handler.(mc_nft.NftService).QueryProps(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*QueryPropsResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newQueryPropsArgs() interface{} {
+	return &QueryPropsArgs{}
+}
+
+func newQueryPropsResult() interface{} {
+	return &QueryPropsResult{}
+}
+
+type QueryPropsArgs struct {
+	Req *props.QueryPropsRequest
+}
+
+func (p *QueryPropsArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, fmt.Errorf("No req in QueryPropsArgs")
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *QueryPropsArgs) Unmarshal(in []byte) error {
+	msg := new(props.QueryPropsRequest)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var QueryPropsArgs_Req_DEFAULT *props.QueryPropsRequest
+
+func (p *QueryPropsArgs) GetReq() *props.QueryPropsRequest {
+	if !p.IsSetReq() {
+		return QueryPropsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *QueryPropsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+type QueryPropsResult struct {
+	Success *props.QueryPropsResponse
+}
+
+var QueryPropsResult_Success_DEFAULT *props.QueryPropsResponse
+
+func (p *QueryPropsResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, fmt.Errorf("No req in QueryPropsResult")
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *QueryPropsResult) Unmarshal(in []byte) error {
+	msg := new(props.QueryPropsResponse)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *QueryPropsResult) GetSuccess() *props.QueryPropsResponse {
+	if !p.IsSetSuccess() {
+		return QueryPropsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *QueryPropsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*props.QueryPropsResponse)
+}
+
+func (p *QueryPropsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func consumePropsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(props.ConsumePropsRequest)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(mc_nft.NftService).ConsumeProps(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *ConsumePropsArgs:
+		success, err := handler.(mc_nft.NftService).ConsumeProps(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*ConsumePropsResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newConsumePropsArgs() interface{} {
+	return &ConsumePropsArgs{}
+}
+
+func newConsumePropsResult() interface{} {
+	return &ConsumePropsResult{}
+}
+
+type ConsumePropsArgs struct {
+	Req *props.ConsumePropsRequest
+}
+
+func (p *ConsumePropsArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, fmt.Errorf("No req in ConsumePropsArgs")
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *ConsumePropsArgs) Unmarshal(in []byte) error {
+	msg := new(props.ConsumePropsRequest)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var ConsumePropsArgs_Req_DEFAULT *props.ConsumePropsRequest
+
+func (p *ConsumePropsArgs) GetReq() *props.ConsumePropsRequest {
+	if !p.IsSetReq() {
+		return ConsumePropsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *ConsumePropsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+type ConsumePropsResult struct {
+	Success *props.ConsumePropsResponse
+}
+
+var ConsumePropsResult_Success_DEFAULT *props.ConsumePropsResponse
+
+func (p *ConsumePropsResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, fmt.Errorf("No req in ConsumePropsResult")
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *ConsumePropsResult) Unmarshal(in []byte) error {
+	msg := new(props.ConsumePropsResponse)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *ConsumePropsResult) GetSuccess() *props.ConsumePropsResponse {
+	if !p.IsSetSuccess() {
+		return ConsumePropsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *ConsumePropsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*props.ConsumePropsResponse)
+}
+
+func (p *ConsumePropsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
 func addDiamondHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
@@ -1469,6 +1781,36 @@ func (p *kClient) UpdateProps(ctx context.Context, Req *props.UpdatePropsRequest
 	_args.Req = Req
 	var _result UpdatePropsResult
 	if err = p.c.Call(ctx, "UpdateProps", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DistributeProps(ctx context.Context, Req *props.DistributePropsRequest) (r *props.DistributePropsResponse, err error) {
+	var _args DistributePropsArgs
+	_args.Req = Req
+	var _result DistributePropsResult
+	if err = p.c.Call(ctx, "DistributeProps", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) QueryProps(ctx context.Context, Req *props.QueryPropsRequest) (r *props.QueryPropsResponse, err error) {
+	var _args QueryPropsArgs
+	_args.Req = Req
+	var _result QueryPropsResult
+	if err = p.c.Call(ctx, "QueryProps", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) ConsumeProps(ctx context.Context, Req *props.ConsumePropsRequest) (r *props.ConsumePropsResponse, err error) {
+	var _args ConsumePropsArgs
+	_args.Req = Req
+	var _result ConsumePropsResult
+	if err = p.c.Call(ctx, "ConsumeProps", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

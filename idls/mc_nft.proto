@@ -23,14 +23,27 @@ service NftService {
     // props 道具接口
     rpc AddProps (props.AddPropsRequest) returns (props.AddPropsResponse);
     rpc UpdateProps (props.UpdatePropsRequest) returns (props.UpdatePropsResponse);
+    // 给用户发放道具
+    rpc DistributeProps (props.DistributePropsRequest) returns (props.DistributePropsResponse);
+    // 查询道具 「人维度和道具维度」
+    rpc QueryProps (props.QueryPropsRequest) returns (props.QueryPropsResponse);
+    // 核销道具
+    rpc ConsumeProps (props.ConsumePropsRequest) returns (props.ConsumePropsResponse);
+
+
 
     // diamond 钻石系统
     rpc AddDiamond (virtual_currency.AddDiamondRequest) returns (virtual_currency.AddDiamondResponse);
+    // 消费钻石
     rpc ConsumeDiamond (virtual_currency.ConsumeDiamondRequest) returns (virtual_currency.ConsumeDiamondResponse);
+    // 查询用户钻石
     rpc QueryUserDiamond (virtual_currency.QueryUserDiamondRequest) returns (virtual_currency.QueryUserDiamondResponse);
 
     // credits 积分接口
+    // 更新积分
     rpc AddOrUpdateCredits (credits.AddOrUpdateCreditsRequest) returns (credits.AddOrUpdateCreditsResponse);
+    // 查询用户积分
     rpc GetUserCredits (credits.GetUserCreditsRequest) returns (credits.GetUserCreditsResponse);
+    // 查询积分排行 TOP K (用户不在榜单则展示 K+ )
     rpc GetCreditsRank (credits.GetCreditsRankRequest) returns (credits.GetCreditsRankResponse);
 }
