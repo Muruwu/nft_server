@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 
+	"github.com/mc_nft/dal/kv"
 	credits "github.com/mc_nft/kitex_gen/credits"
 	"github.com/mc_nft/kitex_gen/ping"
 	props "github.com/mc_nft/kitex_gen/props"
@@ -18,6 +19,7 @@ type BaseResponse interface {
 
 // Ping implements the NftServiceImpl interface.
 func (s *NftServiceImpl) Ping(ctx context.Context, req *ping.PingRequest) (resp *ping.PingResponse, err error) {
+	_ = kv.RedisClient.Ping(ctx)
 	resp = &ping.PingResponse{Msg: "pong"}
 	return
 }

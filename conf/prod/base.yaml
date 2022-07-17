@@ -1,0 +1,22 @@
+mysql:
+  master: 
+    host: "127.0.0.1"
+    port: 3306
+    user: "root"
+    password: "123456"
+    dbName: "dev"
+  slave: 
+    host: "127.0.0.1"
+    port: 3306
+    user: "root"
+    password: "123456"
+    dbName: "dev"
+  connectionTimeOut: 5000
+  maxIdle: 2000
+redis: 
+  host: "127.0.0.1"
+  password: ""
+  db: 0
+  maxIdle: 8
+  maxActivate: 50
+  idleTimeOut: 3600

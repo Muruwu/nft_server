@@ -12,3 +12,7 @@
   https://github.com/go-gorm/gorm
 * gorm model code generate 使用
   https://github.com/go-gorm/gen
+  
+
+## Tips
+  conf/*.yaml 注意 key: value 中间有个空格
